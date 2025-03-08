@@ -15,7 +15,7 @@ const ListEmployeeComponent = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container mt-10">
       <>
         <h2>List of Employees</h2>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg text-white">
