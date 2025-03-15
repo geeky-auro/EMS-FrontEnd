@@ -1,4 +1,5 @@
 import React from "react";
+import { APP_NAME } from "../utils/constants";
 
 const Footer = () => {
   return (
@@ -7,7 +8,7 @@ const Footer = () => {
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2025{" "}
           <a href="https://flowbite.com/" className="hover:underline">
-            Employee Management System
+            {APP_NAME}
           </a>
           . All Rights Reserved.
         </span>
