@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { listEmployees } from "../services/EmployeeService";
 import { EMP_TABLE_COLS, LIST_EMP_TITLE } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const ListEmployeeComponent = () => {
   const [employee, setEmployees] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     listEmployees()
@@ -15,9 +17,29 @@ const ListEmployeeComponent = () => {
       });
   }, []);
 
+  const addEmployee = () => {
+    // Navigate to the Add Employee Page ;)
+    navigate("/add-employee");
+  };
+
   return (
-    <div className="container">
-      <h2 className="text-center">{LIST_EMP_TITLE}</h2>
+    <div className="container mt-4">
+      <div className="flex flex-row items-center justify-between w-full">
+        <div>
+          <h2 className="absolute left-1/2 transform -translate-x-1/2">
+            {LIST_EMP_TITLE}
+          </h2>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 flex flex-row "
+            onClick={addEmployee}
+          >
+            <div>ADD EMPLOYEE</div>
+          </button>
+        </div>
+      </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg text-white">
         <table className="w-full text-sm text-left rtl:text-right text-white">
           <thead className="text-xs uppercase bg-gray-50 dark:bg-gray-700">
