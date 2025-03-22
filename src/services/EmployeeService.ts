@@ -11,3 +11,8 @@ export const listEmployees = () => {
 export const saveEmployees = (employees: any) => {
   return axios.post(REST_API_BASE_URL_, employees);
 };
+
+export const getEmployees = (id: number | undefined) => {
+  console.log(`${REST_API_BASE_URL_}/${id}`);
+  return axios.get(`${REST_API_BASE_URL_}/${id}`);
+};

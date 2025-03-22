@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { saveEmployees } from "../services/EmployeeService";
+import React, { useEffect, useState } from "react";
+import { getEmployees, saveEmployees } from "../services/EmployeeService";
 import Dialog from "./Dialog";
+import { useParams } from "react-router-dom";
 
 const AddEmployee = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -19,7 +20,22 @@ const AddEmployee = () => {
     setOpenDialog(true);
   };
 
-  console.log("rendered");
+  const { id }: { id: number | undefined } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      // Fetch employee data based on ID
+      getEmployees(id)
+        .then((response) => {
+          setFirstName(response.data.firstName);
+          setLastName(response.data.lastName);
+          setEmail(response.data.email);
+        })
+        .catch((error) => {
+          console.log("Error Caught" + error);
+        });
+    }
+  }, [id]);
 
   return (
     <>
@@ -49,6 +65,7 @@ const AddEmployee = () => {
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="First Name"
+                value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 required
               />
@@ -61,6 +78,7 @@ const AddEmployee = () => {
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Last Name"
+                value={lasName}
                 onChange={(e) => setLastName(e.target.value)}
                 required
               />
@@ -73,6 +91,7 @@ const AddEmployee = () => {
                 type="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="employee@emplyai.com"
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />

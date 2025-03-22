@@ -22,10 +22,11 @@ const ListEmployeeComponent = () => {
     navigate("/add-employee");
   };
 
-  const editEmployee = () => {
+  const editEmployee = (id: any) => {
     // Edit the employee ;)
     // Navigate to the Edit Employee Page ;)
-    navigate("/edit-employee");
+    console.log(Object.prototype.toString.call(id).slice(8, -1));
+    navigate(`/edit-employee/${id}`);
   };
 
   return (
@@ -75,7 +76,7 @@ const ListEmployeeComponent = () => {
                 <td>
                   <button
                     className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-                    onClick={editEmployee}
+                    onClick={() => editEmployee(employee.id)}
                   >
                     Edit
                   </button>
