@@ -20,3 +20,7 @@ export const getEmployees = (id: number | undefined) => {
 export const updateEmployee = (id: number | undefined, employee: any) => {
   return axios.put(`${REST_API_BASE_URL_}/${id}`, employee);
 };
+
+export const deleteEmployee_ = (id: number | undefined) => {
+  return axios.delete(`${REST_API_BASE_URL_}/${id}`);
+};

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listEmployees } from "../services/EmployeeService";
+import { deleteEmployee_, listEmployees } from "../services/EmployeeService";
 import { EMP_TABLE_COLS, LIST_EMP_TITLE } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { store } from "../utils/store";
@@ -18,6 +18,11 @@ const ListEmployeeComponent = () => {
       });
   }, []);
 
+  const deleteEmployee = (id: number | any) => {
+    deleteEmployee_(id);
+    setEmployees(employee.filter((employee) => employee.id != id));
+  };
+
   const addEmployee = () => {
     // Navigate to the Add Employee Page ;)
     store.dispatch({ type: "ADD_EMPLOYEE" });
@@ -32,9 +37,6 @@ const ListEmployeeComponent = () => {
     // Edit the employee ;)
     // Navigate to the Edit Employee Page ;)
     store.dispatch({ type: "EDIT_EMPLOYEE" });
-    console.log(
-      "Cuurent Store State in Edit Employee:" + store.getState().isEditable
-    );
     navigate(`/edit-employee/${id}`);
   };
 
@@ -42,9 +44,9 @@ const ListEmployeeComponent = () => {
     <div className="container mt-4">
       <div className="flex flex-row items-center justify-between w-full">
         <div>
-          <h2 className="absolute left-1/2 transform -translate-x-1/2">
+          <h1 className="absolute left-1/2 transform -translate-x-1/2">
             {LIST_EMP_TITLE}
-          </h2>
+          </h1>
         </div>
         <div>
           <button
@@ -52,7 +54,7 @@ const ListEmployeeComponent = () => {
             className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 flex flex-row "
             onClick={addEmployee}
           >
-            <div>ADD EMPLOYEE</div>
+            ADD EMPLOYEE
           </button>
         </div>
       </div>
@@ -84,10 +86,16 @@ const ListEmployeeComponent = () => {
                 <td className="px-6 py-3">{employee.email}</td>
                 <td>
                   <button
-                    className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                    className="text-white m-2 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                     onClick={() => editEmployee(employee.id)}
                   >
                     Edit
+                  </button>
+                  <button
+                    className="text-white m-2 bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                    onClick={() => deleteEmployee(employee.id)}
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>
