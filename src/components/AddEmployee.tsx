@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { getEmployees, saveEmployees } from "../services/EmployeeService";
+import {
+  getEmployees,
+  saveEmployees,
+  updateEmployee,
+} from "../services/EmployeeService";
 import Dialog from "./Dialog";
 import { useParams } from "react-router-dom";
+import { store } from "../utils/store";
 
 const AddEmployee = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lasName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [isEditable, setIsEditable] = useState<boolean>(false);
+  const { id }: { id: number | undefined } = useParams();
 
   const saveEmployee = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,11 +23,31 @@ const AddEmployee = () => {
       lastName: lasName,
       email: email,
     };
-    saveEmployees(employee);
+    console.log(isEditable);
+    switch (isEditable) {
+      case true: {
+        console.log("Saving Existing Employee"); // Update in edit mode
+        updateEmployee(id, employee);
+        break;
+      }
+      case false: {
+        console.log("Adding New Employee"); // Add in add mode
+        saveEmployees(employee);
+        break;
+      }
+    }
+
     setOpenDialog(true);
   };
 
-  const { id }: { id: number | undefined } = useParams();
+  useEffect(() => {
+    setIsEditable(store.getState().isEditable);
+    const unsubscribe = store.subscribe(() => {
+      setIsEditable(store.getState().isEditable);
+    });
+
+    return () => unsubscribe();
+  }, [store]);
 
   useEffect(() => {
     if (id) {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listEmployees } from "../services/EmployeeService";
 import { EMP_TABLE_COLS, LIST_EMP_TITLE } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import { store } from "../utils/store";
 
 const ListEmployeeComponent = () => {
   const [employee, setEmployees] = useState([]);
@@ -19,13 +20,21 @@ const ListEmployeeComponent = () => {
 
   const addEmployee = () => {
     // Navigate to the Add Employee Page ;)
+    store.dispatch({ type: "ADD_EMPLOYEE" });
+    console.log(
+      "Current Store State in ADD Employee: " + store.getState().isEditable
+    ); // Access the state directly.
+
     navigate("/add-employee");
   };
 
   const editEmployee = (id: any) => {
     // Edit the employee ;)
     // Navigate to the Edit Employee Page ;)
-    console.log(Object.prototype.toString.call(id).slice(8, -1));
+    store.dispatch({ type: "EDIT_EMPLOYEE" });
+    console.log(
+      "Cuurent Store State in Edit Employee:" + store.getState().isEditable
+    );
     navigate(`/edit-employee/${id}`);
   };
 

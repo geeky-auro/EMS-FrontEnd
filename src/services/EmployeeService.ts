@@ -16,3 +16,7 @@ export const getEmployees = (id: number | undefined) => {
   console.log(`${REST_API_BASE_URL_}/${id}`);
   return axios.get(`${REST_API_BASE_URL_}/${id}`);
 };
+
+export const updateEmployee = (id: number | undefined, employee: any) => {
+  return axios.put(`${REST_API_BASE_URL_}/${id}`, employee);
+};
