@@ -22,6 +22,12 @@ const ListEmployeeComponent = () => {
     navigate("/add-employee");
   };
 
+  const editEmployee = () => {
+    // Edit the employee ;)
+    // Navigate to the Edit Employee Page ;)
+    navigate("/edit-employee");
+  };
+
   return (
     <div className="container mt-4">
       <div className="flex flex-row items-center justify-between w-full">
@@ -67,7 +73,10 @@ const ListEmployeeComponent = () => {
                 <td className="px-6 py-3">{employee.lastName}</td>
                 <td className="px-6 py-3">{employee.email}</td>
                 <td>
-                  <button className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                  <button
+                    className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                    onClick={editEmployee}
+                  >
                     Edit
                   </button>
                 </td>
